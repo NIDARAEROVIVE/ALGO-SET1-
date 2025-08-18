@@ -1,0 +1,42 @@
++-----------------------------------------------------------------------+
+|                              GROUND STATION                           |
+|  (Central Command Center - Python-based)                              |
+|  +---------------------+  +-------------------+  +------------------+ |
+|  | Mission Control     |  | Geospatial Database|  | Live Map Display| |
+|  | - Voronoi Partition |  | - Survivor Locations|  | - Drone Tracking| |
+|  | - Priority Queue    |  | - Hazard Maps      |  | - Resource View | |
+|  +----------^----------+  +---------^---------+  +------------------+ |
+|             |  LoRa/WiFi             | LoRa/WiFi                      |
++-------------|------------------------|--------------------------------+
+              |                        |
++-------------|------------------------|--------------------------------+
+| SCOUT DRONE (RPi 5 + Pixhawk)        | DELIVERY DRONE (Arduino + Pixhawk)
+| +-------------------------------+    | +------------------------------+
+| | Raspberry Pi 5                |    | | Arduino Nano                 |
+| | +---------------------------+ |    | | +--------------------------+ |
+| | | AI Inference Engine       |<------->| Delivery Manager         | |
+| | | - YOLOv8 (TensorRT)       | | LoRa | | - Payload Release Logic | |
+| | | - Thermal Analysis        | |    | | +------------^-----------+ |
+| | +---------------------------+ |    | +--------------|-----------+
+| | | Geotagging Module         | |    | +--------------v-----------+
+| | | - GPS Synchronization     | |    | | Pixhawk Controller       | |
+| | | - EXIF Metadata           | |    | | - Flight Control         | |
+| | | - GIS Integration         | |    | | - MAVLink Bridge        | |
+| | +---------------------------+ |    | +--------------+----------+ |
+| | | Path Planner              | |    | +--------------v-----------+
+| | | - RRT* Algorithm         | |    | | Sensors:                | |
+| | | - Swarm Avoidance        | |    | | • Ultrasonic Altimeter  | |
+| | +---------------------------+ |    | | • Basic IMU            | |
+| +--------------^----------------+    | +--------------------------+ |
+| +--------------v----------------+    | +--------------------------+ |
+| | Pixhawk Controller           |    | | Payload System           | |
+| | - Flight Control             |    | | • Servo-controlled Drop  | |
+| | - MAVLink Interface          |    | | • Emergency Packages     | |
+| +--------------+---------------+    | +--------------------------+ |
+| +--------------v---------------+    +------------------------------+
+| | Sensors:                     |
+| | • Global Shutter Camera      |
+| | • Thermal Imaging (AMG8833)  |
+| | • RTK-GPS (cm accuracy)      |
+| | • LiDAR Lite v4              |
+| +------------------------------+
